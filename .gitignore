@@ -1,0 +1,12 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*/__pycache__/
+
+# IDE
+.idea/
+
+# Temporary file
+testfile.py
