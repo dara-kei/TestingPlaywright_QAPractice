@@ -1,60 +1,47 @@
-from playwright.sync_api import Page, expect
 import pytest
 
-
-URL = "https://www.qa-practice.com/elements/textarea/textareas"
-FIRST_TEXT_AREA_LOCATOR = "#id_first_chapter"
-SECOND_TEXT_AREA_LOCATOR = "#id_second_chapter"
-THIRD_TEXT_AREA_LOCATOR = "#id_third_chapter"
-BUTTON_LOCATOR= "#submit-id-submit"
-RESULT_LOCATOR = "#result-text"
-
-def test_areas_initial_state(page: Page) -> None:
-    page.goto(URL)
-    expect(page.locator("textarea")).to_have_count(3)
-    expect(page.locator(f'label[for="{FIRST_TEXT_AREA_LOCATOR[1:]}"]')).to_have_text("First chapter*")
-    expect(page.locator(f'label[for="{SECOND_TEXT_AREA_LOCATOR[1:]}"]')).to_have_text("Second chapter")
-    expect(page.locator(f'label[for="{THIRD_TEXT_AREA_LOCATOR[1:]}"]')).to_have_text("Third chapter")
-    expect(page.locator(FIRST_TEXT_AREA_LOCATOR)).to_have_attribute("required", "")
+def test_areas_initial_state(text_areas_page):
+    text_areas_page.open_url()
+    text_areas_page.page_should_have_three_text_areas()
+    text_areas_page.areas_should_have_correct_labels()
+    text_areas_page.first_area_should_be_required()
 
 
-def test_filled_first_area(page: Page) -> None:
-    page.goto(URL)
-    page.locator(FIRST_TEXT_AREA_LOCATOR).fill("Hello")
-    page.locator(BUTTON_LOCATOR).click()
-    expect(page.locator(RESULT_LOCATOR)).to_have_text("Hello")
+def test_filled_first_area(text_areas_page):
+    text_areas_page.open_url()
+    text_areas_page.fill_areas(first = "Hello")
+    text_areas_page.submit()
+    text_areas_page.result_should_have_text("Hello")
 
 
-@pytest.mark.parametrize("other_area", [SECOND_TEXT_AREA_LOCATOR, THIRD_TEXT_AREA_LOCATOR])
-def test_filled_two_areas(page: Page, other_area) -> None:
-    page.goto(URL)
-    page.locator(FIRST_TEXT_AREA_LOCATOR).fill("Hello")
-    page.locator(other_area).fill("World!")
-    page.locator(BUTTON_LOCATOR).click()
-    # expect(page.locator(RESULT_LOCATOR)).to_have_text("HelloWorld!")
-    expect(page.locator(RESULT_LOCATOR)).to_contain_text("Hello")
-    expect(page.locator(RESULT_LOCATOR)).to_contain_text("World")
+@pytest.mark.parametrize(
+    "second, third",
+    [
+        ("World", None),
+        (None, "World")
 
-def test_filled_all_areas(page: Page) -> None:
-    page.goto(URL)
-    page.locator(FIRST_TEXT_AREA_LOCATOR).fill("Hello")
-    page.locator(SECOND_TEXT_AREA_LOCATOR).fill("my")
-    page.locator(THIRD_TEXT_AREA_LOCATOR).fill("World!")
-    page.locator(BUTTON_LOCATOR).click()
-    expect(page.locator(RESULT_LOCATOR)).to_contain_text("Hello")
-    expect(page.locator(RESULT_LOCATOR)).to_contain_text("My")
-    expect(page.locator(RESULT_LOCATOR)).to_contain_text("World!")
+    ]
+)
+def test_filled_two_areas(text_areas_page, second, third) -> None:
+    text_areas_page.open_url()
+    text_areas_page.fill_areas(first="Hello", second = second, third = third)
+    text_areas_page.submit()
+    text_areas_page.result_should_have_text("HelloWorld")
 
+def test_filled_all_areas(text_areas_page):
+    text_areas_page.open_url()
+    text_areas_page.fill_areas(first = "Hello", second = "my", third = "World!")
+    text_areas_page.submit()
+    text_areas_page.result_should_have_text("HelloMyWorld!")
 
-def test_empty_all_areas(page: Page) -> None:
-    page.goto(URL)
-    page.locator(BUTTON_LOCATOR).click()
-    expect(page.locator(RESULT_LOCATOR)).to_have_count(0)
+def test_empty_all_areas(text_areas_page):
+    text_areas_page.open_url()
+    text_areas_page.submit()
+    text_areas_page.result_should_not_exist()
 
+def test_not_filled_required_area(text_areas_page):
+    text_areas_page.open_url()
+    text_areas_page.fill_areas(second = "my", third = "World")
+    text_areas_page.submit()
+    text_areas_page.result_should_not_exist()
 
-def test_not_filled_required_area(page: Page) -> None:
-    page.goto(URL)
-    page.locator(SECOND_TEXT_AREA_LOCATOR).fill("my")
-    page.locator(THIRD_TEXT_AREA_LOCATOR).fill("World!")
-    page.locator(BUTTON_LOCATOR).click()
-    expect(page.locator(RESULT_LOCATOR)).to_have_count(0)

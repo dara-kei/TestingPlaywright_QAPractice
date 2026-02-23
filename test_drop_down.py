@@ -1,6 +1,5 @@
-from playwright.sync_api import Page, expect
 import pytest
-from pages.drop_down_page import DropDownPage, ProgrammingLanguage
+from pages.drop_down_page import ProgrammingLanguage
 
 
 @pytest.mark.parametrize("choice", [x.value for x in ProgrammingLanguage]) # для каждого элемента в ProgLanguage вернет его value
@@ -8,18 +7,18 @@ def test_select_options(select_page, choice) -> None:
     select_page.open_url()
     select_page.select_language(choice)
     select_page.submit()
-    select_page.check_result(choice)
+    select_page.result_should_have_text(choice)
 
 
-def test_select_no_options(page: Page) -> None:
-    page.goto("https://www.qa-practice.com/elements/select/single_select")
-    page.locator("#submit-id-submit").click()
-    expect(page.locator("#result-text")).to_have_count(0)
+def test_select_no_options(select_page) -> None:
+    select_page.open_url()
+    select_page.submit()
+    select_page.result_should_not_exist()
 
-def test_select_is_required_field(page:Page) -> None:
-    page.goto("https://www.qa-practice.com/elements/select/single_select")
-    expect(page.locator("#id_choose_language")).to_have_attribute("required", "")
+def test_select_is_required_field(select_page) -> None:
+    select_page.open_url()
+    select_page.field_should_be_required()
 
-def test_field_name(page:Page) -> None:
-    page.goto("https://www.qa-practice.com/elements/select/single_select")
-    expect(page.locator("label[for='id_choose_language']")).to_have_text("Choose language*")
+def test_field_name(select_page) -> None:
+    select_page.open_url()
+    select_page.should_have_field_name()
