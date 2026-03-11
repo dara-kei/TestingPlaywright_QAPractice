@@ -14,14 +14,8 @@ def test_filled_first_area(text_areas_page):
     text_areas_page.result_should_have_text("Hello")
 
 
-@pytest.mark.parametrize(
-    "second, third",
-    [
-        ("World", None),
-        (None, "World")
-
-    ]
-)
+@pytest.mark.parametrize("second, third", [("World", None),
+                                           (None, "World")])
 def test_filled_two_areas(text_areas_page, second, third) -> None:
     text_areas_page.open_url()
     text_areas_page.fill_areas(first="Hello", second = second, third = third)

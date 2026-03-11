@@ -60,7 +60,7 @@ def test_not_select_one_option(page: Page, dropdown_selected_1, text1, dropdown_
     expect(page.locator(RESULT_LOCATOR)).to_have_count(0)
 
 
-# в этом тесте будут перебираться все комбинации (60 тестов!), что избыточно
+# в этом тесте будут перебираться все комбинации (60 тестов!), что избыточно, хотя в данном тесте меньше по коду
 # @pytest.mark.parametrize("first_dropdown", [x.value for x in Places])
 # @pytest.mark.parametrize("second_dropdown", [x.value for x in Transport])
 # @pytest.mark.parametrize("third_dropdown", [x.value for x in Date])
