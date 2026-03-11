@@ -1,18 +1,15 @@
 from playwright.sync_api import Page, expect
+from pages.base_page import BasePage
 
 
-class CheckboxPage:
+class CheckboxPage(BasePage):
     URL = "https://www.qa-practice.com/elements/checkbox/single_checkbox"
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
         self.checkbox = page.locator("#id_checkbox_0")
         self.button = page.locator("#submit-id-submit")
         self.result = page.locator("#result-text")
-
-
-    def open_page(self):
-        self.page.goto(self.URL)
 
     def submit(self):
         self.button.click()
@@ -20,11 +17,8 @@ class CheckboxPage:
     def select_checkbox(self):
         self.checkbox.check()
 
-    def checkbox_should_be_visible(self):
-        expect(self.checkbox).to_be_visible()
-
     def checkbox_should_exist(self):
-        expect(self.checkbox).to_have_count(1)
+        expect(self.page.get_by_role("checkbox")).to_have_count(1)
 
     def checkbox_should_have_text(self, text):
         expect(self.page.locator('label[for="id_checkbox_0"]')).to_have_text(text)
