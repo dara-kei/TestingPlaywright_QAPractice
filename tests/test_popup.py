@@ -48,6 +48,15 @@ def test_modal_popup_classwork(page: Page):
     button.click()
     expect(page.locator("#result-text")).to_have_text("select me or not")
 
+def test_modal(page: Page):
+    page.goto("https://www.qa-practice.com/elements/popup/modal")
+    expect(page.locator('#content > button')).to_have_text("Launch Pop-Up")
+    page.locator('#content > button').click()
+    page.locator('#id_checkbox_0').check()
+    page.locator('//button[@type="submit"]').click()
+    expect(page.locator("#result-text")).to_have_text("select me or not")
+
+
 
 
 
