@@ -1,5 +1,5 @@
 import pytest
-from models.programming_language import ProgrammingLanguage
+from data.programming_language import ProgrammingLanguage
 
 
 def test_single_select_page_initial_state(single_select_page) -> None:

@@ -1,5 +1,6 @@
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
+from pathlib import Path
 
 
 class PracticeFormPage(BasePage):
@@ -10,18 +11,18 @@ class PracticeFormPage(BasePage):
         self.first_name_input = page.locator("#firstName")
         self.last_name_input = page.locator("#lastName")
         self.email_input = page.locator("#userEmail")
-        self.gender_checkboxes = {"male" : page.locator("#gender_0"),
-                                  "female" : page.locator("#gender_1"),
-                                  "other" : page.locator("#gender_2")}
+        self.gender_checkboxes = {"Male" : page.locator("#gender_0"),
+                                  "Female" : page.locator("#gender_1"),
+                                  "Other" : page.locator("#gender_2")}
         self.mobile_number_input = page.locator("#userNumber")
         self.subjects_input = page.locator("#subjectsAutocomplete") # "Social Studies", "Sanskrit"
-        self.hobbies_checkboxes = {"sports" : page.locator("#hobbies_0"),
-                        "reading" : page.locator("#hobbies_1"),
-                        "music" : page.locator("#hobbies_2")}
+        self.hobbies_checkboxes = {"Sports" : page.locator("#hobbies_0"),
+                        "Reading" : page.locator("#hobbies_1"),
+                        "Music" : page.locator("#hobbies_2")}
         self.picture_upload = page.locator("#uploadPicture")
         self.current_address = page.locator("#currentAddress")
-        self.state_select = page.locator("#state")
-        self.city_select = page.locator("#city")
+        self.state_select = page.locator("#div_id_state .custom-dropdown-control")
+        self.city_select = page.locator("#div_id_city .custom-dropdown-control")
         self.submit_button = page.locator("#submit-id-submit")
 
         # modal results
@@ -32,17 +33,22 @@ class PracticeFormPage(BasePage):
         self.student_email = page.locator("#resultsTable tr:nth-child(2) td:nth-child(2)")
         self.gender = page.locator("#resultsTable tr:nth-child(3) td:nth-child(2)")
         self.mobile = page.locator("#resultsTable tr:nth-child(4) td:nth-child(2)")
-        self.subjects = page.locator("#resultsTable tr:nth-child(5) td:nth-child(2)")
-        self.hobbies = page.locator("#resultsTable tr:nth-child(6) td:nth-child(2)")
-        self.picture = page.locator("#resultsTable tr:nth-child(7) td:nth-child(2)")
-        self.address = page.locator("#resultsTable tr:nth-child(8) td:nth-child(2)")
-        self.state_and_city = page.locator("#resultsTable tr:nth-child(9) td:nth-child(2)")
+        self.subjects = page.locator("#resultsTable tr:nth-child(6) td:nth-child(2)")
+        self.hobbies = page.locator("#resultsTable tr:nth-child(7) td:nth-child(2)")
+        self.picture = page.locator("#resultsTable tr:nth-child(8) td:nth-child(2)")
+        self.address = page.locator("#resultsTable tr:nth-child(9) td:nth-child(2)")
+        self.state_and_city = page.locator("#resultsTable tr:nth-child(10) td:nth-child(2)")
 
 
 
 
     def submit_form(self):
-        self.submit_button.click()
+        self.submit_button.click(force=True)
+
+    def upload_picture(self, file_path: str):
+        self.picture_upload.set_input_files(file_path)
+
+
 
 
     def fill_input_fields_in_form(self, data_to_fill: dict):
@@ -52,34 +58,52 @@ class PracticeFormPage(BasePage):
             self.last_name_input.fill(data_to_fill["last_name"])
         if "email" in data_to_fill:
             self.email_input.fill(data_to_fill["email"])
+        if "gender" in data_to_fill:
+            self.gender_checkboxes[data_to_fill["gender"]].check()
         if "mobile_number" in data_to_fill:
             self.mobile_number_input.fill(data_to_fill["mobile_number"])
-        if "subjects_input" in data_to_fill:
-            self.subjects_input.fill(data_to_fill["subjects_input"])
+        if "subjects" in data_to_fill:
+            self.subjects_input.fill(data_to_fill["subjects"])
+            self.subjects_input.press("Enter")
+        if "hobbies" in data_to_fill:
+            for item in data_to_fill["hobbies"]:
+                self.hobbies_checkboxes[item].check()
+        if "picture" in data_to_fill:
+            self.upload_picture(data_to_fill["picture"])
         if "address_input" in data_to_fill:
             self.current_address.fill(data_to_fill["address_input"])
+        if "state" in data_to_fill:
+            self.state_select.click()
+            self.page.locator(f"div.custom-dropdown-option[data-value='{data_to_fill["state"]}']").click()
+        if "city" in data_to_fill:
+            self.city_select.click()
+            self.page.locator(f"div.custom-dropdown-option[data-value='{data_to_fill["city"]}']").click()
 
-
-    def select_checkbox(self,
-                        gender_checkbox = None,
-                        hobby_checkbox = None):
-        if gender_checkbox is not None:
-            self.gender_checkboxes[gender_checkbox].check()
-        if hobby_checkbox is not None:
-            self.hobbies[hobby_checkbox].check()
 
 
     def should_have_result_popup_with_default_state(self, data_to_fill):
+        expect(self.result_modal).to_be_visible()
         expect(self.result_modal_title).to_have_text("Thanks for submitting the form")
         expect(self.student_name).to_have_text(data_to_fill["first_name"] + " " + data_to_fill["last_name"])
         expect(self.student_email).to_have_text(data_to_fill["email"])
         expect(self.gender).to_have_text(data_to_fill["gender"])
         expect(self.mobile).to_have_text(data_to_fill["mobile_number"])
-        expect(self.subjects).to_have_text(data_to_fill["subjects"])
-        expect(self.hobbies).to_have_text(data_to_fill["hobbies"])
-        expect(self.picture).to_have_text(data_to_fill["picture"])
+        if "subjects" in data_to_fill:
+            expect(self.subjects).to_have_text(data_to_fill["subjects"])
+        else:
+            expect(self.subjects).to_have_text("Not provided")
+        if "hobbies" in data_to_fill:
+            result = ", ".join(data_to_fill["hobbies"])
+            expect(self.hobbies).to_have_text(result)
+        else:
+            expect(self.hobbies).to_have_text("Not provided")
+        if "picture" in data_to_fill:
+            expect(self.picture).to_have_text(Path(data_to_fill["picture"]).name)
+        else:
+            expect(self.picture).to_have_text("Not provided")
         expect(self.address).to_have_text(data_to_fill["address_input"])
-        expect(self.state_and_city).to_have_text(data_to_fill["current_address"])
+        if "state" in data_to_fill and "city" in data_to_fill:
+            expect(self.state_and_city).to_have_text(data_to_fill["state"])
 
     def close_result_popup(self):
         self.modal_close_button.click()

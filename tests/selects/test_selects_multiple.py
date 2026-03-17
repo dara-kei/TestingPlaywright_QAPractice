@@ -1,4 +1,4 @@
-from models.travel_options import Places, Transport, Date
+from data.travel_options import Places, Transport, Date
 import pytest
 
 
