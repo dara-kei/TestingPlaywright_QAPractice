@@ -17,7 +17,7 @@ class IframePage(BasePage):
 
     def should_not_have_empty_iframe(self):
         new_page = self.open_iframe()
-        expect(new_page.locator("h1")).to_have_text(
-            "Album example")  # проверяем, что страница с контентом, а не с ошибкой 404
+        expect(new_page.locator("h1")).to_have_text("Album example")
+        # проверяем, что страница с контентом, а не с ошибкой 404
 
 

@@ -19,6 +19,10 @@ from pages.new_tabs.new_tab_with_button_page import NewTabWithButtonPage
 from pages.drag_and_drop.drag_and_drop_boxes_page import DragAndDropBoxesPage
 from pages.drag_and_drop.drag_and_drop_image_page import DragAndDropImagePage
 from pages.iframe_page import IframePage
+from pages.popups.popup_modal_page import ModalPopupPage
+from pages.popups.popup_iframe_page import IframePopupPage
+from pages.practice_form_page import PracticeFormPage
+
 
 import pytest
 
@@ -104,3 +108,15 @@ def drag_and_drop_image_page(page: Page):
 @pytest.fixture
 def iframe_page(page: Page):
     return IframePage(page)
+
+@pytest.fixture
+def popup_modal_page(page: Page):
+    return ModalPopupPage(page)
+
+@pytest.fixture()
+def popup_iframe_page(page: Page):
+    return IframePopupPage(page)
+
+@pytest.fixture
+def practice_form_page(page: Page):
+    return PracticeFormPage(page)
