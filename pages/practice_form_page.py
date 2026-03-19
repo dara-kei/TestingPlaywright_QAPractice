@@ -123,7 +123,7 @@ class PracticeFormPage(BasePage):
                 expect(self.picture).to_have_text("Not provided")
             expect(self.address).to_have_text(data_to_fill["address_input"])
             if "state" in data_to_fill and "city" in data_to_fill:
-                expect(self.state_and_city).to_have_text(data_to_fill["state"])
+                expect(self.state_and_city).to_have_text(data_to_fill["state"] + ", " + data_to_fill["city"] )
 
 
     # processing the result with errors
