@@ -128,7 +128,7 @@ class PracticeFormPage(BasePage):
 
     # processing the result with errors
     @allure.step("Check the form should not be submitted")
-    def should_not_submit_form(self):
+    def should_not_submit(self):
         expect(self.result_modal).not_to_be_visible()
 
     @allure.step("Check error message is displayed")

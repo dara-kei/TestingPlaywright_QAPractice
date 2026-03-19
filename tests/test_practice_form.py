@@ -21,7 +21,7 @@ def test_submit_form_with_only_required_fields_filled(practice_form_page):
         raise e
 
 
-@pytest.mark.xfail(reason="Bug: city is not displayed")
+@pytest.mark.xfail(reason="Bug: City is not displayed")
 @allure.feature("Practice Form")
 @allure.story("Submitting Form")
 @allure.title("Submitting form with all fields filled")
@@ -59,7 +59,7 @@ def test_try_submit_form_without_one_required_field_filled(practice_form_page, d
         practice_form_page.open()
         practice_form_page.fill_input_fields_in_form(data_without_one_required_field)
         practice_form_page.submit_form()
-        practice_form_page.should_not_submit_form()
+        practice_form_page.should_not_submit()
     except Exception as e:
         attach_screenshot(practice_form_page.page, "error_screenshot")
         raise e
@@ -75,7 +75,7 @@ def test_try_submit_with_invalid_mobile_number(practice_form_page):
         practice_form_page.fill_input_fields_in_form(
             change_key(valid_required_data_to_fill, "mobile_number", change="12-43-44"))
         practice_form_page.submit_form()
-        practice_form_page.should_not_submit_form()
+        practice_form_page.should_not_submit()
         practice_form_page.should_have_error_message("Mobile number must be exactly 10 digits")
     except Exception as e:
         attach_screenshot(practice_form_page.page, "error_screenshot")

@@ -69,11 +69,10 @@ def test_whitespace_only_input_shows_validation_error(input_text_page)-> None:
 @allure.title("Trying submitting input text field with invalid data")
 @allure.description("""
 Requirements:
-- Has minimum 8 characters in length.
-- At least one uppercase English letter.
-- At least one lowercase English letter.
-- At least one digit.
-- At least one special character.
+- Text should be a valid string consisting of English letters, numbers, underscores or hyphens
+- Text length limits:
+- Max: 25 characters
+- Min: 2 characters
 """)
 @pytest.mark.parametrize("invalid_data, error_message", [("j", "Please enter 2 or more characters"),
                                                          ("12345678901234567890123456", "Please enter no more than 25 characters"),

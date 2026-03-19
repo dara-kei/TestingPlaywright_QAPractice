@@ -33,7 +33,7 @@ def test_valid_passwd_input_submission(input_passwd_page,valid_passwd)-> None:
 # negative tests
 
 @allure.feature("Input password")
-@allure.title("Trying submitting input password field without filling data")
+@allure.title("Trying submitting empty input password")
 @allure.description("""
 Requirements:
 - This is a required field.
@@ -77,7 +77,7 @@ Requirements:
 @pytest.mark.parametrize("invalid_passwd", ["tested1#", "Tested11", "Tested##", "Test1#"],
                          ids = ["passwd_without_one_uppercase_let",
                                 "passwd_without_special_symbol",
-                                "passwd _without_numbers",
+                                "passwd_without_numbers",
                                 "passwd_shorter_than_min_length"])
 def test_invalid_passwd_input_shows_error_message(input_passwd_page, invalid_passwd)-> None:
     try:

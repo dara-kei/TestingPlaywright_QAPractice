@@ -9,12 +9,13 @@ class BaseAlertPage(BasePage):
         self.button = page.locator(".a-button")
         self.result = page.locator("#result-text")
 
+
     @allure.step("Click a button for calling an alert")
     def click_button(self) -> None:
         self.button.click()
 
 
-    @allure.step("Check the button is visible")
+    @allure.step("Check the button is displayed")
     def should_have_button_visible(self):
         expect(self.button).to_be_visible()
 
