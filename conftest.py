@@ -22,8 +22,6 @@ from pages.iframe_page import IframePage
 from pages.popups.popup_modal_page import ModalPopupPage
 from pages.popups.popup_iframe_page import IframePopupPage
 from pages.practice_form_page import PracticeFormPage
-
-
 import pytest
 
 
@@ -120,3 +118,4 @@ def popup_iframe_page(page: Page):
 @pytest.fixture
 def practice_form_page(page: Page):
     return PracticeFormPage(page)
+

@@ -1,12 +1,34 @@
 from data.travel_options import Places, Transport, Date
 import pytest
+import allure
+from utils.allure_helper import attach_screenshot
 
 
+@allure.feature("Multiple selects")
+@allure.title("Checking selects default state")
+@allure.description("""
+Requirements:
+- There should be 3 fields:
+- Choose the place you want to go
+- Choose how you want to get there
+- Choose when you want to go
+- All the fields are required.
+""")
 def test_selects_multiple_page_initial_state(select_multiple_page) -> None:
-    select_multiple_page.open()
-    select_multiple_page.should_have_default_state()
+    try:
+        select_multiple_page.open()
+        select_multiple_page.should_have_default_state()
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
 
 
+@allure.feature("Multiple selects")
+@allure.title("Trying submitting with one select not selected ")
+@allure.description("""
+Requirements:
+- All the fields are required.
+""")
 # Проверка, что все dropdown обязательные через не нажатие одного
 @pytest.mark.parametrize(
     "select1_index, text1, select2_index, text2",[(1, "Car", 2, "Today"),
@@ -14,11 +36,15 @@ def test_selects_multiple_page_initial_state(select_multiple_page) -> None:
                                                   (0, "Sea", 1, "Car")]
 )
 def test_submit_with_one_select_not_selected(select_multiple_page, select1_index, text1, select2_index, text2) -> None:
-    select_multiple_page.open()
-    select_multiple_page.choose_select_option(select1_index, text1)
-    select_multiple_page.choose_select_option(select2_index, text2)
-    select_multiple_page.submit()
-    select_multiple_page.should_not_have_result()
+    try:
+        select_multiple_page.open()
+        select_multiple_page.choose_select_option(select1_index, text1)
+        select_multiple_page.choose_select_option(select2_index, text2)
+        select_multiple_page.submit()
+        select_multiple_page.should_not_have_result()
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
 
 
 # # в этом тесте будут перебираться все комбинации (60 тестов!), что избыточно, хотя в данном тесте меньше по коду
@@ -34,32 +60,69 @@ def test_submit_with_one_select_not_selected(select_multiple_page, select1_index
 #     select_multiple_page.should_have_result_text(f"to go by {select2_value.lower()} to the {select1_value.lower()} {select3_value.lower()}")
 
 
-# проверка всех вариантов Places
+@allure.feature("Multiple selects")
+@allure.title("Checking submission with all selects selected (all options of select Places")
+@allure.description("""
+Requirements:
+- User should be able to select any option in each field
+- The result can be sent using the Submit button
+- After submitting the form, the option selected by the user should be placed into the resulting phrase and displayed to the user
+- Resulting phrase template: "to go by <transport> to the <destination> <when>"
+""")
 @pytest.mark.parametrize("select1_value", [x.value for x in Places])
 def test_submit_with_all_first_select_options(select_multiple_page, select1_value) -> None:
-    select_multiple_page.open()
-    select_multiple_page.choose_select_option(0, select1_value)
-    select_multiple_page.choose_select_option(1, "Car")
-    select_multiple_page.choose_select_option(2, "Today")
-    select_multiple_page.submit()
-    select_multiple_page.should_have_result_text(f"to go by car to the {select1_value.lower()} today")
+    try:
+        select_multiple_page.open()
+        select_multiple_page.choose_select_option(0, select1_value)
+        select_multiple_page.choose_select_option(1, "Car")
+        select_multiple_page.choose_select_option(2, "Today")
+        select_multiple_page.submit()
+        select_multiple_page.should_have_result_text(f"to go by car to the {select1_value.lower()} today")
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
 
 
-# проверка всех вариантов Transport
+@allure.feature("Multiple selects")
+@allure.title("Checking submission with all selects selected (all options of select Transport")
+@allure.description("""
+Requirements:
+- User should be able to select any option in each field
+- The result can be sent using the Submit button
+- After submitting the form, the option selected by the user should be placed into the resulting phrase and displayed to the user
+- Resulting phrase template: "to go by <transport> to the <destination> <when>"
+""")
 @pytest.mark.parametrize("select2_value", [x.value for x in Transport])
 def test_submit_with_all_second_select_options(select_multiple_page, select2_value) -> None:
-    select_multiple_page.open()
-    select_multiple_page.choose_select_option(0, "Mountains")
-    select_multiple_page.choose_select_option(1, select2_value)
-    select_multiple_page.choose_select_option(2, "Tomorrow")
-    select_multiple_page.submit()
-    select_multiple_page.should_have_result_text(f"to go by {select2_value.lower()} to the mountains tomorrow")
+    try:
+        select_multiple_page.open()
+        select_multiple_page.choose_select_option(0, "Mountains")
+        select_multiple_page.choose_select_option(1, select2_value)
+        select_multiple_page.choose_select_option(2, "Tomorrow")
+        select_multiple_page.submit()
+        select_multiple_page.should_have_result_text(f"to go by {select2_value.lower()} to the mountains tomorrow")
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
 
-# проверка оставшегося варианта Date
+
+@allure.feature("Multiple selects")
+@allure.title("Checking submission with all selects selected (last option of select Date")
+@allure.description("""
+Requirements:
+- User should be able to select any option in each field
+- The result can be sent using the Submit button
+- After submitting the form, the option selected by the user should be placed into the resulting phrase and displayed to the user
+- Resulting phrase template: "to go by <transport> to the <destination> <when>"
+""")
 def test_last_option_of_third_select(select_multiple_page) -> None:
-    select_multiple_page.open()
-    select_multiple_page.choose_select_option(0, "Old town")
-    select_multiple_page.choose_select_option(1, "Train")
-    select_multiple_page.choose_select_option(2, "Next week")
-    select_multiple_page.submit()
-    select_multiple_page.should_have_result_text(f"to go by train to the old town next week")
+    try:
+        select_multiple_page.open()
+        select_multiple_page.choose_select_option(0, "Old town")
+        select_multiple_page.choose_select_option(1, "Train")
+        select_multiple_page.choose_select_option(2, "Next week")
+        select_multiple_page.submit()
+        select_multiple_page.should_have_result_text(f"to go by train to the old town next week")
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e

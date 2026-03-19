@@ -1,5 +1,6 @@
 from playwright.sync_api import Page, expect
 from pages.selects.base_select_page import BaseSelectPage
+import allure
 
 
 class SingleSelectPage(BaseSelectPage):
@@ -12,10 +13,12 @@ class SingleSelectPage(BaseSelectPage):
         self.field_name = page.locator("label[for='id_choose_language']")
 
 
-    def choose_select_option(self, option: str) -> None:
+    @allure.step("Choose select option: {option}")
+    def choose_select_option(self, option: str):
         self.select.select_option(option)
 
 
+    @allure.step("Check select necessity and label")
     def should_have_default_state(self):
         expect(self.select).to_have_attribute("required", "")
         expect(self.page.locator("label[for='id_choose_language']")).to_have_text("Choose language*")
