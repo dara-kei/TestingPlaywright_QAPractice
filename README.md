@@ -20,6 +20,7 @@ Tested various UI components, including:
 - Python
 - Playwright
 - Pytest
+- Allure Report
 
 
 4. Features
@@ -28,6 +29,8 @@ Tested various UI components, including:
 - Used test parametrization to increase test coverage
 - Covered both positive and negative test scenarios
 - Organized tests using markers
+- Integrated Allure Report for test reporting
+- Added test steps, features, titles, and descriptions for better readability and analysis
 
 
 5. Bug Findings
