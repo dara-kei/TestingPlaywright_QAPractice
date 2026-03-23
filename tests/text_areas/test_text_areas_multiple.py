@@ -3,6 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
+@pytest.mark.positive
 @allure.feature("Multiple text area")
 @allure.title("Checking text areas default state")
 @allure.description("""
@@ -22,8 +23,7 @@ def test_areas_multiple_initial_state(text_areas_multiple_page) -> None:
         raise e
 
 
-# positive tests
-
+@pytest.mark.positive
 @allure.feature("Multiple text area")
 @allure.title("Checking submitting when first text area is filled")
 @allure.description("""
@@ -44,6 +44,7 @@ def test_submit_when_first_area_filled(text_areas_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple text area")
 @allure.title("Checking submitting when two text areas are filled (included required)")
 @allure.description("""
@@ -65,6 +66,7 @@ def test_submit_when_two_areas_filled(text_areas_multiple_page, second, third) -
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple text area")
 @allure.title("Checking submitting when all text areas are filled")
 @allure.description("""
@@ -85,8 +87,7 @@ def test_submit_when_all_areas_filled(text_areas_multiple_page) -> None:
         raise e
 
 
-# negative tests
-
+@pytest.mark.negative
 @allure.feature("Multiple text area")
 @allure.title("Trying submitting when all text areas are empty")
 @allure.description("""
@@ -103,6 +104,7 @@ def test_submit_when_all_areas_empty(text_areas_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Multiple text area")
 @allure.title("Trying submitting when required text area is empty")
 @allure.description("""
@@ -120,6 +122,7 @@ def test_submit_when_required_area_not_filled(text_areas_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Multiple text area")
 @allure.title("Trying submitting when required text area is filled with only spaces")
 @allure.description("""

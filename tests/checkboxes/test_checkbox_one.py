@@ -1,8 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
-
+@pytest.mark.positive
 @allure.feature("Single checkbox")
 @allure.title("Checking checkbox page")
 @allure.description("""
@@ -21,6 +22,7 @@ def test_checkbox_page_initial_state(checkbox_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Single checkbox")
 @allure.title("Checking checkbox submit")
 @allure.description("""
@@ -40,6 +42,7 @@ def test_checked_checkbox_shows_result_after_submit(checkbox_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Single checkbox")
 @allure.title("Trying submitting with unchecked checkbox")
 @allure.description("""

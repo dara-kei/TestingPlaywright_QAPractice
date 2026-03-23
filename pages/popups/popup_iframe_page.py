@@ -27,6 +27,7 @@ class IframePopupPage(BasePage):
     def open_popup(self):
         self.button_open_popup.click()
 
+
     @allure.step("Get Pop-Up iframe text")
     def get_iframe_text(self):
         return self.popup_text_to_copy.inner_text()

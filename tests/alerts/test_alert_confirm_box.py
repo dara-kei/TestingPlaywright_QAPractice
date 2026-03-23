@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Alert confirmation box")
 @allure.title("Checking button display")
 @allure.description("""
@@ -17,7 +19,7 @@ def test_page_have_click_button(alert_confirmation_box_page) -> None:
         raise err
 
 
-
+@pytest.mark.positive
 @allure.feature("Alert confirmation box")
 @allure.title("Checking alert dialog data and accepting it.")
 @allure.description("""
@@ -36,9 +38,9 @@ def test_confirm_dialog_info_and_accept(alert_confirmation_box_page) -> None:
     except Exception as err:
         attach_screenshot(alert_confirmation_box_page.page, "error_screenshot")
         raise err
-# БАГ! Alert window should display text "I am an alert!"
 
 
+@pytest.mark.positive
 @allure.feature("Alert confirmation box")
 @allure.title("Checking cancellation alert dialog.")
 @allure.description("""

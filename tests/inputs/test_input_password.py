@@ -3,7 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
-# positive tests
+@pytest.mark.positive
 @allure.feature("Input password")
 @allure.title("Checking input password field submission")
 @allure.description("""
@@ -30,8 +30,7 @@ def test_valid_passwd_input_submission(input_passwd_page,valid_passwd)-> None:
         raise e
 
 
-# negative tests
-
+@pytest.mark.negative
 @allure.feature("Input password")
 @allure.title("Trying submitting empty input password")
 @allure.description("""
@@ -48,6 +47,7 @@ def test_empty_text_input_shows_validation_error(input_passwd_page)-> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input password")
 @allure.title("Trying submitting input password field with whitespace only")
 @allure.description("""
@@ -64,6 +64,7 @@ def test_whitespace_only_input_shows_validation_error(input_passwd_page)-> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input password")
 @allure.title("Trying submitting input password field with invalid data")
 @allure.description("""

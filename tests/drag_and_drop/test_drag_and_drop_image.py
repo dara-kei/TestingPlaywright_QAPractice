@@ -3,6 +3,7 @@ from utils.allure_helper import attach_screenshot
 import pytest
 
 
+@pytest.mark.positive
 @pytest.mark.xfail(reason="Bug: img is in wrong square", strict=False)
 @allure.feature("Drag and drop image")
 @allure.title("Checking drag and drop image page")
@@ -20,6 +21,7 @@ def test_drag_and_drop_image_page_initial_state(drag_and_drop_image_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Drag and drop image")
 @allure.title("Checking dragging image from box to box")
 @allure.description("""

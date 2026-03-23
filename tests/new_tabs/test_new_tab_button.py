@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("New tab open with button")
 @allure.title("Checking opening new tab with button")
 @allure.description("""

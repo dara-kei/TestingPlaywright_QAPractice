@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Looks like a button")
 @allure.title("Checking button submit")
 @allure.description("""

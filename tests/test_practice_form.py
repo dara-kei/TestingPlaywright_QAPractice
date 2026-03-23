@@ -6,6 +6,7 @@ from data.data_for_practice_form import (valid_required_data_to_fill, valid_firs
                                          without, change_key)
 
 
+@pytest.mark.positive
 @allure.feature("Practice Form")
 @allure.story("Submitting Form")
 @allure.title("Submitting form with only required fields filled")
@@ -21,11 +22,14 @@ def test_submit_form_with_only_required_fields_filled(practice_form_page):
         raise e
 
 
+@pytest.mark.positive
 @pytest.mark.xfail(reason="Bug: City is not displayed")
 @allure.feature("Practice Form")
 @allure.story("Submitting Form")
 @allure.title("Submitting form with all fields filled")
-@pytest.mark.parametrize("all_data_to_fill", [valid_first_all_data_to_fill, valid_second_all_data_to_fill, valid_third_all_data_to_fill])
+@pytest.mark.parametrize("all_data_to_fill", [valid_first_all_data_to_fill,
+                                              valid_second_all_data_to_fill,
+                                              valid_third_all_data_to_fill])
 def test_submit_form_with_all_required_fields_filled(practice_form_page, all_data_to_fill):
     try:
         practice_form_page.open()
@@ -38,16 +42,17 @@ def test_submit_form_with_all_required_fields_filled(practice_form_page, all_dat
         raise e
 
 
-
+@pytest.mark.negative
 @allure.feature("Practice Form")
 @allure.story("Submitting Form")
 @allure.title("Trying submitting form without one required field filled")
-@pytest.mark.parametrize("data_without_one_required_field", [without(valid_required_data_to_fill, "first_name"),
-                                                             without(valid_required_data_to_fill, "last_name"),
-                                                             without(valid_required_data_to_fill, "email"),
-                                                             without(valid_required_data_to_fill, "gender"),
-                                                             without(valid_required_data_to_fill, "mobile_number"),
-                                                             without(valid_required_data_to_fill, "address_input")],
+@pytest.mark.parametrize("data_without_one_required_field",
+                         [without(valid_required_data_to_fill, "first_name"),
+                          without(valid_required_data_to_fill, "last_name"),
+                          without(valid_required_data_to_fill, "email"),
+                          without(valid_required_data_to_fill, "gender"),
+                          without(valid_required_data_to_fill, "mobile_number"),
+                          without(valid_required_data_to_fill, "address_input")],
                          ids= ["data_without_first_name",
                                "data_without_last_name",
                                "data_without_email",
@@ -65,7 +70,7 @@ def test_try_submit_form_without_one_required_field_filled(practice_form_page, d
         raise e
 
 
-
+@pytest.mark.negative
 @allure.feature("Practice Form")
 @allure.story("Submitting Form")
 @allure.title("Trying submitting form with invalid phone number")

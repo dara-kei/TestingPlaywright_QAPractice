@@ -3,6 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
+@pytest.mark.positive
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking button that opens Pop-Up")
 @allure.description("""
@@ -18,6 +19,7 @@ def test_name_of_button_that_open_popup(popup_iframe_page):
         raise e
 
 
+@pytest.mark.positive
 @pytest.mark.xfail(reason="Bug: wrong name for a button", strict=False)
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking Pop-Up default state")
@@ -39,7 +41,7 @@ def test_popup_initial_state(popup_iframe_page):
         raise e
 
 
-
+@pytest.mark.positive
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking input form default state")
 @allure.description("""
@@ -57,6 +59,7 @@ def test_input_form_initial_state(popup_iframe_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking submitting input form with valid data")
 @allure.description("""
@@ -78,6 +81,7 @@ def test_submit_input_form_with_valid_data(popup_iframe_page):
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking submitting input form with invalid data")
 @allure.description("""
@@ -98,6 +102,7 @@ def test_submit_input_form_with_invalid_data(popup_iframe_page, invalid_data):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Iframe Pop-Up")
 @allure.title("Checking canceling Pop-Up")
 @allure.description("""

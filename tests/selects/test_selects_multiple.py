@@ -4,6 +4,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
+@pytest.mark.positive
 @allure.feature("Multiple selects")
 @allure.title("Checking selects default state")
 @allure.description("""
@@ -23,6 +24,7 @@ def test_selects_multiple_page_initial_state(select_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Multiple selects")
 @allure.title("Trying submitting with one select not selected ")
 @allure.description("""
@@ -60,6 +62,7 @@ def test_submit_with_one_select_not_selected(select_multiple_page, select1_index
 #     select_multiple_page.should_have_result_text(f"to go by {select2_value.lower()} to the {select1_value.lower()} {select3_value.lower()}")
 
 
+@pytest.mark.positive
 @allure.feature("Multiple selects")
 @allure.title("Checking submission with all selects selected (all options of select Places")
 @allure.description("""
@@ -83,6 +86,7 @@ def test_submit_with_all_first_select_options(select_multiple_page, select1_valu
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple selects")
 @allure.title("Checking submission with all selects selected (all options of select Transport")
 @allure.description("""
@@ -106,6 +110,7 @@ def test_submit_with_all_second_select_options(select_multiple_page, select2_val
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple selects")
 @allure.title("Checking submission with all selects selected (last option of select Date")
 @allure.description("""

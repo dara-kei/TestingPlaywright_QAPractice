@@ -4,6 +4,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
+@pytest.mark.positive
 @allure.feature("Single select")
 @allure.title("Checking select default state")
 @allure.description("""
@@ -20,6 +21,7 @@ def test_single_select_page_initial_state(single_select_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Single select")
 @allure.title("Checking submitting select")
 @allure.description("""
@@ -40,6 +42,7 @@ def test_submit_with_select_selected(single_select_page, language_option) -> Non
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Single select")
 @allure.title("Trying submitting with select not selected")
 @allure.description("""

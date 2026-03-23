@@ -3,6 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
+@pytest.mark.positive
 @allure.feature("Multiple checkboxes")
 @allure.title("Checking checkboxes page")
 @allure.description("""
@@ -23,6 +24,7 @@ def test_checkboxes_page_initial_state(checkboxes_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple checkboxes")
 @allure.title("Checking submitting with one checkbox checked")
 @allure.description("""
@@ -43,6 +45,7 @@ def test_one_checked_checkbox_shows_result(checkboxes_multiple_page, checkbox_in
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple checkboxes")
 @allure.title("Checking submitting with two checkboxes checked")
 @allure.description("""
@@ -67,6 +70,7 @@ def test_two_checked_checkboxes_shows_result(
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Multiple checkboxes")
 @allure.title("Checking submitting with all checkboxes checked")
 @allure.description("""
@@ -87,6 +91,7 @@ def test_all_checked_checkboxes_shows_result(checkboxes_multiple_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Multiple checkboxes")
 @allure.title("Trying submitting no checkbox checked")
 @allure.description("""

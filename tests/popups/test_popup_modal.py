@@ -3,6 +3,7 @@ from utils.allure_helper import attach_screenshot
 import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Modal Pop-Up")
 @allure.title("Checking button that opens Pop-Up")
 @allure.description("""
@@ -18,6 +19,7 @@ def test_name_of_button_that_open_popup(popup_modal_page):
         raise e
 
 
+@pytest.mark.positive
 @pytest.mark.xfail(reason="Bug: wrong name for a button", strict=False)
 @allure.feature("Modal Pop-Up")
 @allure.title("Checking Pop-Up default state")
@@ -39,6 +41,7 @@ def test_popup_initial_state(popup_modal_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Modal Pop-Up")
 @allure.title("Checking sending Pop-Up value with checkbox checked")
 @allure.description("""
@@ -58,6 +61,7 @@ def test_send_popup_value_with_checkbox_checked(popup_modal_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Modal Pop-Up")
 @allure.title("Checking sending Pop-Up value without checkbox checked")
 @allure.description("""
@@ -77,6 +81,7 @@ def test_send_popup_value_with_checkbox_unchecked(popup_modal_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Modal Pop-Up")
 @allure.title("Checking canceling Pop-Up")
 @allure.description("""

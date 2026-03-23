@@ -64,7 +64,7 @@ class PracticeFormPage(BasePage):
         self.picture_upload.set_input_files(file_path)
 
 
-    @allure.step("Fill the form with the date: {data_to_fill}")
+    @allure.step("Fill the form with the data: {data_to_fill}")
     def fill_input_fields_in_form(self, data_to_fill: dict):
         if "first_name" in data_to_fill:
             self.first_name_input.fill(data_to_fill["first_name"])

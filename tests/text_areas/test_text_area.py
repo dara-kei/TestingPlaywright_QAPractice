@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Single text area")
 @allure.title("Checking single text area default state")
 @allure.description("""
@@ -18,6 +20,7 @@ def test_area_single_initial_state(text_area_single_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Single text area")
 @allure.title("Checking submitting single text area")
 @allure.description("""
@@ -37,6 +40,7 @@ def test_submit_when_text_area_filled(text_area_single_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Single text area")
 @allure.title("Trying submitting single text area without filling any text")
 @allure.description("""
@@ -53,6 +57,7 @@ def test_submit_when_text_area_not_filled(text_area_single_page) -> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Single text area")
 @allure.title("Trying submitting single text area with filling only spaces")
 @allure.description("""

@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Drag and drop boxes")
 @allure.title("Checking drag and drop boxes page")
 @allure.description("""
@@ -17,6 +19,7 @@ def test_drag_and_drop_page_initial_state(drag_and_drop_boxes_page):
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Drag and drop boxes")
 @allure.title("Checking dragging one box to another")
 @allure.description("""

@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Alert")
 @allure.title("Checking button display")
 @allure.description("""
@@ -17,6 +19,8 @@ def test_page_have_click_button(alert_box_page) -> None:
         raise err
 
 
+
+@pytest.mark.positive
 @allure.feature("Alert")
 @allure.title("Checking alert dialog data and accepting it.")
 @allure.description("""

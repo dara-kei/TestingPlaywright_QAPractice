@@ -3,8 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
-# positive tests
-
+@pytest.mark.positive
 @allure.feature("Input text")
 @allure.title("Checking input text field submission")
 @allure.description("""
@@ -32,7 +31,7 @@ def test_valid_text_input_submission(input_text_page, valid_text)-> None:
         raise e
 
 
-# negative tests
+@pytest.mark.negative
 @allure.feature("Input text")
 @allure.title("Trying submitting input text field without filling data")
 @allure.description("""
@@ -49,6 +48,7 @@ def test_empty_text_input_shows_validation_error(input_text_page)-> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input text")
 @allure.title("Trying submitting input text field with whitespace only")
 @allure.description("""
@@ -65,6 +65,7 @@ def test_whitespace_only_input_shows_validation_error(input_text_page)-> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input text")
 @allure.title("Trying submitting input text field with invalid data")
 @allure.description("""

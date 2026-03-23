@@ -1,7 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
 
+@pytest.mark.positive
 @allure.feature("Iframe")
 @allure.title("Checking iframe with a sample page")
 @allure.description("""

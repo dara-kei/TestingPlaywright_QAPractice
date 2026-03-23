@@ -1,6 +1,9 @@
 import allure
 from utils.allure_helper import attach_screenshot
+import pytest
 
+
+@pytest.mark.positive
 @allure.feature("Disabled button")
 @allure.title("Checking button is disabled")
 @allure.description("""
@@ -16,6 +19,7 @@ def test_button_is_disabled_by_default(disabled_button_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Disabled button")
 @allure.title("Checking button can change enabled/disabled state")
 @allure.description("""
@@ -35,6 +39,7 @@ def test_button_state_can_be_changed_via_dropdown(disabled_button_page) -> None:
         raise e
 
 
+@pytest.mark.positive
 @allure.feature("Disabled button")
 @allure.title("Checking button submit")
 @allure.description("""

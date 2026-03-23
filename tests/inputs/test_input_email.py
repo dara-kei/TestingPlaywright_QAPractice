@@ -3,8 +3,7 @@ import allure
 from utils.allure_helper import attach_screenshot
 
 
-# positive tests
-
+@pytest.mark.positive
 @allure.feature("Input email")
 @allure.title("Checking input email field submission")
 @allure.description("""
@@ -28,8 +27,7 @@ def test_valid_email_input_submission(input_email_page, valid_email)-> None:
         raise e
 
 
-# negative tests
-
+@pytest.mark.negative
 @allure.feature("Input email")
 @allure.title("Trying submitting input email field without filling data")
 @allure.description("""
@@ -46,6 +44,7 @@ def test_empty_email_input_shows_error_message(input_email_page)-> None:
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input email")
 @allure.title("Trying submitting input email field with whitespace only")
 @allure.description("""
@@ -62,6 +61,7 @@ def test_whitespace_only_email_input_shows_error_message(input_email_page)-> Non
         raise e
 
 
+@pytest.mark.negative
 @allure.feature("Input email")
 @allure.title("Trying submitting input email field with invalid data")
 @allure.description("""
