@@ -75,10 +75,15 @@ Requirements:
 - Max: 25 characters
 - Min: 2 characters
 """)
-@pytest.mark.parametrize("invalid_data, error_message", [("j", "Please enter 2 or more characters"),
-                                                         ("12345678901234567890123456", "Please enter no more than 25 characters"),
-                                                         ("Привет", "Enter a valid string consisting of letters, numbers, underscores or hyphens."),
-                                                         ("@@", "Enter a valid string consisting of letters, numbers, underscores or hyphens.")])
+@pytest.mark.parametrize("invalid_data, error_message",
+                         [("j", "Please enter 2 or more characters"),
+                          ("12345678901234567890123456", "Please enter no more than 25 characters"),
+                          ("Привет", "Enter a valid string consisting of letters, numbers, underscores or hyphens."),
+                          ("@@", "Enter a valid string consisting of letters, numbers, underscores or hyphens.")],
+                         ids=["less_letters",
+                              "more_letter",
+                              "non_latin_letters",
+                              "invalid_symbols"])
 def test_invalid_data_input_shows_validation_error(input_text_page, invalid_data, error_message)-> None:
     try:
         input_text_page.open()
