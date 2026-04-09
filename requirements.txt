@@ -2,3 +2,4 @@ playwright
 pytest
 allure-pytest
 faker
+pytest-playwright
