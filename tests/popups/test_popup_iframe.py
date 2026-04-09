@@ -31,7 +31,7 @@ Requirements:
 - There should be a text to copy "I am the text you want to copy".
 - There should be two buttons: "Cancel" and "Check".
 """)
-def test_popup_initial_state(popup_iframe_page):
+def test_popup_iframe_initial_state(popup_iframe_page):
     try:
         popup_iframe_page.open()
         popup_iframe_page.open_popup()

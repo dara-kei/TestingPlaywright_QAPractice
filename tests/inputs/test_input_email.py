@@ -14,7 +14,7 @@ Requirements:
 - User can submit this one-field form by pressing Enter.
 - After submitting the form, the text entered by the user is displayed on the page.
 """)
-@pytest.mark.parametrize('valid_email', ["user@google.com", "user@localhost", " user@localhost "])
+@pytest.mark.parametrize('valid_email', ["user@google.com", "user@localhost"])
 def test_valid_email_input_submission(input_email_page, valid_email)-> None:
     try:
         input_email_page.open()

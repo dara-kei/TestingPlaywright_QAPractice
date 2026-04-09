@@ -24,30 +24,6 @@ def test_selects_multiple_page_initial_state(select_multiple_page) -> None:
         raise e
 
 
-@pytest.mark.negative
-@allure.feature("Multiple selects")
-@allure.title("Trying submitting with one select not selected ")
-@allure.description("""
-Requirements:
-- All the fields are required.
-""")
-# Проверка, что все dropdown обязательные через не нажатие одного
-@pytest.mark.parametrize(
-    "select1_index, text1, select2_index, text2",[(1, "Car", 2, "Today"),
-                                                  (0, "Sea", 2, "Today"),
-                                                  (0, "Sea", 1, "Car")]
-)
-def test_submit_with_one_select_not_selected(select_multiple_page, select1_index, text1, select2_index, text2) -> None:
-    try:
-        select_multiple_page.open()
-        select_multiple_page.choose_select_option(select1_index, text1)
-        select_multiple_page.choose_select_option(select2_index, text2)
-        select_multiple_page.submit()
-        select_multiple_page.should_not_have_result()
-    except Exception as e:
-        attach_screenshot(select_multiple_page.page, "error_screenshot")
-        raise e
-
 
 # # в этом тесте будут перебираться все комбинации (60 тестов!), что избыточно, хотя в данном тесте меньше по коду
 # @pytest.mark.parametrize("select1_value", [x.value for x in Places])
@@ -112,7 +88,7 @@ def test_submit_with_all_second_select_options(select_multiple_page, select2_val
 
 @pytest.mark.positive
 @allure.feature("Multiple selects")
-@allure.title("Checking submission with all selects selected (last option of select Date")
+@allure.title("Checking submission with all selects selected (last option of select Data")
 @allure.description("""
 Requirements:
 - User should be able to select any option in each field
@@ -120,7 +96,7 @@ Requirements:
 - After submitting the form, the option selected by the user should be placed into the resulting phrase and displayed to the user
 - Resulting phrase template: "to go by <transport> to the <destination> <when>"
 """)
-def test_last_option_of_third_select(select_multiple_page) -> None:
+def test_submit_with_last_option_of_third_select(select_multiple_page) -> None:
     try:
         select_multiple_page.open()
         select_multiple_page.choose_select_option(0, "Old town")
@@ -128,6 +104,42 @@ def test_last_option_of_third_select(select_multiple_page) -> None:
         select_multiple_page.choose_select_option(2, "Next week")
         select_multiple_page.submit()
         select_multiple_page.should_have_result_text(f"to go by train to the old town next week")
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
+
+
+@pytest.mark.negative
+@allure.feature("Multiple selects")
+@allure.title("Trying submitting with one select not selected ")
+@allure.description("""
+Requirements:
+- All the fields are required.
+""")
+# Проверка, что все dropdown обязательные через не нажатие одного
+@pytest.mark.parametrize(
+    "select1_index, text1, select2_index, text2",[(1, "Car", 2, "Today"),
+                                                  (0, "Sea", 2, "Today"),
+                                                  (0, "Sea", 1, "Car")]
+)
+def test_not_submission_with_one_select_not_selected(select_multiple_page, select1_index, text1, select2_index, text2) -> None:
+    try:
+        select_multiple_page.open()
+        select_multiple_page.choose_select_option(select1_index, text1)
+        select_multiple_page.choose_select_option(select2_index, text2)
+        select_multiple_page.submit()
+        select_multiple_page.should_not_have_result()
+    except Exception as e:
+        attach_screenshot(select_multiple_page.page, "error_screenshot")
+        raise e
+
+
+@pytest.mark.negative
+def test_not_submission_when_no_option_selected(select_multiple_page):
+    try:
+        select_multiple_page.open()
+        select_multiple_page.submit()
+        select_multiple_page.should_not_have_result()
     except Exception as e:
         attach_screenshot(select_multiple_page.page, "error_screenshot")
         raise e
